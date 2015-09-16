@@ -1,11 +1,50 @@
 <html>
 <head>
+<title> Cantact Me </title>
+
+<script>
+var submitForm = function(){
+
+}
+</script>
+
+<style>
+label{
+  display: block;
+  margin-top: 20px;
+}
+
+.button
+{
+  display: block;
+  margin-top: 20px;
+  width: 200px;
+  text-align: center;
+  height: 40px;
+  line-height: 40px;
+  border: 1px solid;
+  border-radius: 10px;
+}
+
+</style>
 
 </head>
 
 
 <body>
-  <h1> Node HTTP Server works! </h1>
+  <h1> Enter your Details </h1>
+
+  <label for='contactName'> Enter name </label>
+  <input type='text' id='contactName'>
+  <label for='contactPhone'> Enter Phone</label>
+  <input type='number' id='contactPhone'>
+  <label for='contactEmail'> Enter Email</label>
+  <input type='email' id='contactEmail'>
+  <label for='contactMessage'> Enter message (optional)</label>
+  <textarea id='contactMessage'> </textarea>
+
+
+  <a href="javascript:submitForm()" class="button"> Submit </a>
 </body>
 
 </html>

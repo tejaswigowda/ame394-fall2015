@@ -1,10 +1,10 @@
 var express = require("express"),
-app = express(),
-bodyParser = require('body-parser'),
-errorHandler = require('errorhandler'),
-methodOverride = require('method-override'),
-hostname = process.env.HOSTNAME || 'localhost',
-port = 8080;
+app = express();
+var bodyParser = require('body-parser');
+var errorHandler = require('errorhandler');
+var methodOverride = require('method-override');
+var hostname = process.env.HOSTNAME || 'localhost';
+var port = 8080;
 
 app.get("/", function (req, res) {
       res.redirect("/index.html");
