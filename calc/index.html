@@ -1,0 +1,99 @@
+<html>
+<head>
+
+
+<script>
+function calculatePostfix()
+{
+  var infix = document.getElementById("inputEq").value;
+  var tokens = [];
+  for (var i = 0; i < infix.length; i++){
+    if(infix[i] != " "){
+      tokens[tokens.length] = infix[i];
+    }
+  }
+  alert(tokens);
+}
+
+var stackObj = {
+  content: [],
+  var push: function(val){
+      stackObj.content[stackObj.content.length] = val;
+  },
+  var pop: function(){
+    var top = stackObj.getTop();
+    if(top){
+      stackObj.content.splice(stackObj.content.length -1 );
+    }
+    return top;
+  },
+  var getTop: function(){
+    if(stackObj.content.length == 0){
+      return null;
+    }
+    return stackObj[stackObj.content.length];
+  }
+  var initialize: function(initStack)
+  {
+    stackObj.content = initStack;
+  }
+}
+
+var operators = ["*", "/", "+", "-"];
+function isOperator(t)
+{
+  if(operators.indexOf(t) >= 0){
+    return true;
+  }
+  return false;
+}
+
+function isPrecGreater(a, b)
+{
+
+}
+
+function getPostfix(tokens)
+{
+  var postFix = "";
+  stackObj.initialize([]);
+  for (var i = 0; i < tokens.length; i++){
+    var currScan = tokens[i];
+    //console.log(currScan);
+    if(isOperator(currScan)){ // is operator
+      if(stackObj.getTop()){  // stack not empty
+      }
+      else{  //stack is empty
+        stackObj.push(currScan);
+      }
+    }
+    else{ // is NOT an operator
+      postFix = postFix + currScan;
+    }
+  }
+
+
+
+
+  return postFix;
+}
+
+</script>
+
+
+<style>
+
+</style>
+
+</head>
+
+<body>
+</h1> Simple Calculator </h1>
+
+<input type="text" id='inputEq'> 
+
+<a href='javascript:calculatePostfix()'> Calculate </a>
+</body>
+
+
+</html>
