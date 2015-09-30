@@ -12,31 +12,75 @@ function calculatePostfix()
       tokens[tokens.length] = infix[i];
     }
   }
-  alert(tokens);
+  getPostfix(tokens);
+  
 }
 
 var stackObj = {
   content: [],
-  var push: function(val){
+  push: function(val){
       stackObj.content[stackObj.content.length] = val;
   },
-  var pop: function(){
+  pop: function(){
     var top = stackObj.getTop();
-    if(top){
-      stackObj.content.splice(stackObj.content.length -1 );
+    if(top!=null){
+      stackObj.content = stackObj.content.splice(0,stackObj.content.length -1);
     }
     return top;
   },
-  var getTop: function(){
+  getTop: function(){
     if(stackObj.content.length == 0){
       return null;
     }
-    return stackObj[stackObj.content.length];
-  }
-  var initialize: function(initStack)
+    return stackObj.content[stackObj.content.length-1];
+  },
+  initialize: function(initStack)
   {
     stackObj.content = initStack;
   }
+}
+
+function updateVisualization(step, tokens, postfix)
+{
+  var outS = "<hr><h1>Step " + (step + 1) + "</h1>";
+  //update infix
+  outS += "<div>";
+  var infix = document.getElementById("inputEq").value;
+  outS += "<h2>Infix:</h2>";
+  for (var i = 0; i < tokens.length; i++){
+    if( i == step ){
+      outS += "<span class='smallBox'><b>" + tokens[i] + "</b></span>";
+    }
+    else{
+      outS += "<span class='smallBox'>" + tokens[i] + "</span>";
+    }
+  }
+  outS += "</div>";
+
+  //update stack
+  tokens = stackObj.content;
+  outS += "<div>";
+  outS += "<h2>Stack:</h2>";
+  for (var i = 0; i < tokens.length; i++){
+    outS += "<span class='smallBox'>" + tokens[i] + "</span>";
+  }
+  outS += "<span class='smallBox'><b>&lt;</b></span>";
+  outS += "</div>";
+
+  //update postfix string 
+  tokens = postfix;
+  outS += "<div>";
+  outS += "<h2>Postfix:</h2>";
+  for (var i = 0; i < tokens.length; i++){
+    if( i == step ){
+      outS += "<span class='smallBox'><b>" + tokens[i] + "</b></span>";
+    }
+    else{
+      outS += "<span class='smallBox'>" + tokens[i] + "</span>";
+    }
+  }
+  outS += "</div>";
+  document.getElementById("visual").innerHTML += outS;
 }
 
 var operators = ["*", "/", "+", "-"];
@@ -50,18 +94,36 @@ function isOperator(t)
 
 function isPrecGreater(a, b)
 {
-
+  var pn1 = 1;
+  var pn2 = 1;
+  if(a == "*" || a == "/"){
+    pn1 = 2;
+  }
+  if(b == "*" || b == "/"){
+    pn2 = 2;
+  }
+  if(pn1 > pn2){
+    return true;
+  }
+  return true;
 }
 
 function getPostfix(tokens)
 {
   var postFix = "";
   stackObj.initialize([]);
+  document.getElementById("visual").innerHTML = "";
   for (var i = 0; i < tokens.length; i++){
     var currScan = tokens[i];
-    //console.log(currScan);
+    console.log(currScan);
     if(isOperator(currScan)){ // is operator
-      if(stackObj.getTop()){  // stack not empty
+      var top = stackObj.getTop();
+      if(top != null){  // stack not empty
+        while(isPrecGreater(currScan, top)){
+          postFix += stackObj.pop();
+          top = stackObj.getTop();
+        }
+        stackObj.push(currScan);
       }
       else{  //stack is empty
         stackObj.push(currScan);
@@ -70,18 +132,54 @@ function getPostfix(tokens)
     else{ // is NOT an operator
       postFix = postFix + currScan;
     }
+    updateVisualization(i, tokens, postFix);
+  }
+
+  var top = stackObj.getTop();
+  if(top != null){ 
+    document.getElementById("visual").innerHTML += "<h1> Poping stack....</h1>";
+    while(top){
+      postFix += stackObj.pop();
+      top = stackObj.getTop();
+    }
   }
 
 
+    updateVisualization(i, tokens, postFix);
+
+  document.getElementById("visual").innerHTML += "<h1> Result: " + postFix + "</h1><hr>";
 
 
   return postFix;
+}
+
+function clear()
+{
+  document.getElementById("visual").innerHTML = "";
+  document.getElementById("inputEq").value = "";
 }
 
 </script>
 
 
 <style>
+body
+{
+  font-size: 24px;
+}
+
+.smallBox b
+{
+  font-size: 150%;
+}
+
+.smallBox
+{
+  border: 1px solid;
+  display: inline-block;
+  padding: 10px;
+  vertical-align: middle;
+}
 
 </style>
 
@@ -93,6 +191,10 @@ function getPostfix(tokens)
 <input type="text" id='inputEq'> 
 
 <a href='javascript:calculatePostfix()'> Calculate </a>
+  <a href='javascript:clear()'> Clear </a>
+
+<div id='visual'> 
+</div>
 </body>
 
 
