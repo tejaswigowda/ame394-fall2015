@@ -102,10 +102,11 @@ function isPrecGreater(a, b)
   if(b == "*" || b == "/"){
     pn2 = 2;
   }
-  if(pn1 > pn2){
+  console.log(pn1, pn2);
+  if(pn1 >= pn2){
     return true;
   }
-  return true;
+  return false;
 }
 
 function getPostfix(tokens)
@@ -119,7 +120,7 @@ function getPostfix(tokens)
     if(isOperator(currScan)){ // is operator
       var top = stackObj.getTop();
       if(top != null){  // stack not empty
-        while(isPrecGreater(currScan, top)){
+        while(top && isPrecGreater(top, currScan)){
           postFix += stackObj.pop();
           top = stackObj.getTop();
         }
