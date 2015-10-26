@@ -70,7 +70,6 @@ var linkedList = {
         linkedList.head = newID;
       }
       if(beforeNodeID){
-          var pos = linkedList.getNodePos(beforeNodeID);
           var prevPos  = linkedList.getParentPos(beforeNodeID);
           if(prevPos >= 0)
             linkedList.nodes[prevPos].next = newID;
@@ -88,7 +87,6 @@ var linkedList = {
        return false;
     },
     deleteNode: function(id){
-        var pos = linkedList.getNodePos(id);
         var prevPos  = linkedList.getParentPos(id);
         var next = linkedList.getNode(id).next;
         if(prevPos >= 0)
