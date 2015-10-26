@@ -1,5 +1,35 @@
 <html>
 <head>
+<style>
+  .item span{
+    float: left;
+    font-size: 12px;
+  }
+  .item a{
+    float: right;
+    font-size: 20px;
+    text-decoration: none;
+  }
+  .item:after{
+    content:'\2193';
+    font-size: 24px;
+    display: block;
+  }
+  .item{
+    list-style: none;
+    font-size: 30px;
+    text-align: center;
+    background: white;
+    height: 50px;
+  }
+  .textright{
+    text-align: right;
+    float: right;
+  }
+  .textcenter{
+    text-align: center;
+  }
+</style>
 <script src='jquery-1.11.3.js'> </script>
 <script src='Sortable.min.js'> </script>
 <script>
@@ -145,9 +175,10 @@ function startUp(){
 }
 
 function addLink(){
-  var text = prompt("Add new Link");
+  var text = prompt("Add new node:");
   var id = new Date().getTime();
-  $("#theList").prepend("<li class='" + id + "'>" + text +
+  $("#theList").prepend("<li class='item " + id + "'>" + text +
+                        "<span>" + id + "</span>" +
                         "<a href='javascript:removeLink(" + id + ")'> X </a>" + "</li>" 
                        );
   linkedList.addNodeBefore(text, null, id);
@@ -165,10 +196,10 @@ function removeLink(id){
 
 
 <body onload='startUp()'>
-  <a href='javascript:addLink()'> Add Link </a>
-  <ul id="theList">
-  </ul>
-
+  <a class='textright' href='javascript:addLink()'> + New Node</a>
+  <div class="item head"> HEAD </div>
+  <ul id="theList">  </ul>
+  <div class="textcenter"> NULL </div>
 </body>
 
 </html>
