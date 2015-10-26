@@ -87,6 +87,7 @@ var linkedList = {
        return false;
     },
     deleteNode: function(id){
+        var pos = linkedList.getNodePos(id);
         var prevPos  = linkedList.getParentPos(id);
         var next = linkedList.getNode(id).next;
         if(prevPos >= 0)
@@ -97,8 +98,17 @@ var linkedList = {
         }
     },
     getNodeFromPos: function(pos){
+      var ordList = linkedList.getListIDs();
+      return ordList[pos];
     },
     swapNodes: function(fromPos, toPos){
+      var moveData = linkedList.getNodeFromPos(fromPos);
+      var deleteID = linkedList.getNodeFromPos(fromPos).id;
+      var insertBeforeID =  linkedList.getNodeFromPos(toPos).id;
+
+
+      linkedList.deleteNode(deleteID);
+      linkedList.addNodeBefore(moveData.data, insertBeforeID, moveData.id);
       console.log(fromPos);
       console.log(toPos);
     },
