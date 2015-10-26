@@ -37,12 +37,15 @@
 <script src='Sortable.min.js'> </script>
 <script>
 var linkedList = {
-    initialize:function(initLL, head){
+    initialize:function(initLL, head, tail){
       //initLL is an array of Node Objects --- [{id:"", next:"", data: {}}, {}, {}],
       linkedList.nodes = initLL;
       linkedList.head = head;
+      linkedList.tail = tail;
     },
-    getListIDs: function(){
+    getListIDsFromTail: function(){
+    },
+    getListIDsFromHead: function(){
       var count = linkedList.nodes.length;
       var retArr = [];
       var pointer = linkedList.head;
@@ -58,7 +61,8 @@ var linkedList = {
     },
     nodes: [],
     head: null,
-    addNodeBefore: function(nodeData, beforeNodeID, nodeID){
+    tail: null,
+    addNodeBefore: function(nodeData, beforeNodeID, nodeID){//alter for A4
       var newID = nodeID || new Date().getTime();
       beforeNodeID = beforeNodeID || linkedList.head;
       var newNode = {
@@ -86,7 +90,7 @@ var linkedList = {
       }
        return false;
     },
-    deleteNode: function(id){
+    deleteNode: function(id){//alter for A4
         var pos = linkedList.getNodePos(id);
         var prevPos  = linkedList.getParentPos(id);
         var next = linkedList.getNode(id).next;
@@ -101,7 +105,7 @@ var linkedList = {
       var ordList = linkedList.getListIDs();
       return ordList[pos];
     },
-    swapNodes: function(fromPos, toPos){
+    swapNodes: function(fromPos, toPos){ //alter for A4
       var moveData = linkedList.getNodeFromPos(fromPos);
       var deleteID = linkedList.getNodeFromPos(fromPos).id;
       var insertBeforeID =  linkedList.getNodeFromPos(toPos).id;
@@ -122,6 +126,8 @@ var linkedList = {
         }
       }
       return ret;
+    },
+    getChild: function (id){  //complete for A4
     },
     getNode: function(id){
       var list = linkedList.nodes;
