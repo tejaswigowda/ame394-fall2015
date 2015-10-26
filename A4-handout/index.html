@@ -1,0 +1,114 @@
+<html>
+<head>
+<script src='jquery-1.11.3.js'> </script>
+<script src='Sortable.min.js'> </script>
+<script>
+var linkedList = {
+    initialize:function(initLL, head){
+      //initLL is an array of Node Objects --- [{id:"", next:"", data: {}}, {}, {}],
+      linkedList.nodes = initLL;
+      linkedList.head = head;
+    },
+    nodes: [],
+    head: null,
+    addNode: function(nodeData, afterNodeID, nodeID){
+      var newID = nodeID || new Date().getTime();
+      afterNodeID = afterNodeID || linkedList.head;
+      var newNode = {
+          id: newID,
+          data: nodeData,
+          next: null
+      }
+      if(linkedList.isEmpty()){
+        linkedList.head = newID;
+      }
+      else{
+        var pos = linkedList.getNodePos(afterNodeID);
+        if(pos < 0){
+          alert(afterNodeID + " not a valid node");
+          return;
+        }
+        var swap = linkedList.nodes[pos].next;
+        linkedList.nodes[pos].next = newID;
+        newNode.next = swap;
+        if(afterNodeID == linkedList.head){
+          linkedList.head = newID;
+        }
+      }
+      linkedList.nodes[linkedList.nodes.length] = newNode;
+    },
+    isEmpty: function()
+    {
+      if(linkedList.head == null){
+       return true;
+      }
+       return false;
+    },
+    deleteNode: function(id){
+    },
+    getNodeFromPos: function(pos){
+    },
+    swapNodes: function(pos1, pos2){
+    },
+    getNodePos: function(id){
+      var pos = -1;
+      var list = linkedList.nodes;
+      for(var i = 0; i < list.length; i++){
+        if(list[i].id === id){
+          pos = i;
+          break;
+        }
+      }
+      return pos;
+    }
+}
+
+
+/*
+var x = 5;
+var y = 10;
+// your code here
+var swap;
+swap = x;
+x = y;
+y = swap;
+// end code
+console.log(x);
+console.log(y);
+*/
+
+var sortable;
+
+function startUp(){
+  var el = document.getElementById('theList');
+  sortable = Sortable.create(el, {
+     onEnd: function (evt) {
+          console.log(evt.oldIndex);  // element's old index within parent
+          console.log(evt.newIndex);  // element's new index within parent
+        }
+     }
+   );
+
+}
+
+function addLink(){
+  var text = prompt("Add new Link");
+  var id = new Date().getTime();
+  $("#theList").prepend("<li class='" + id + "'>" + text +
+                        "<a href='javascript:removeLink(" + id + ")'> X </a>" + "</li>" 
+                       );
+  linkedList.addNode(text, null, id);
+}
+
+</script>
+</head>
+
+
+<body onload='startUp()'>
+  <a href='javascript:addLink()'> Add Link </a>
+  <ul id="theList">
+  </ul>
+
+</body>
+
+</html>
