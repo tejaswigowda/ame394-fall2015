@@ -9,31 +9,41 @@ var linkedList = {
       linkedList.nodes = initLL;
       linkedList.head = head;
     },
+    getListIDs: function(){
+      var count = linkedList.nodes.length;
+      var retArr = [];
+      var pointer = linkedList.head;
+      while(count > 0){
+        if(pointer == null){
+          retArr[retArr.length] = "NULL";
+          break;
+        }
+        retArr[retArr.length] = linkedList.getNode(pointer);
+        pointer = linkedList.getNode(pointer).next; count--;
+      }
+      return retArr;
+    },
     nodes: [],
     head: null,
-    addNode: function(nodeData, afterNodeID, nodeID){
+    addNodeBefore: function(nodeData, beforeNodeID, nodeID){
       var newID = nodeID || new Date().getTime();
-      afterNodeID = afterNodeID || linkedList.head;
+      beforeNodeID = beforeNodeID || linkedList.head;
       var newNode = {
           id: newID,
           data: nodeData,
-          next: null
+          next: beforeNodeID
       }
-      if(linkedList.isEmpty()){
+      if(linkedList.head == null){
         linkedList.head = newID;
       }
-      else{
-        var pos = linkedList.getNodePos(afterNodeID);
-        if(pos < 0){
-          alert(afterNodeID + " not a valid node");
-          return;
-        }
-        var swap = linkedList.nodes[pos].next;
-        linkedList.nodes[pos].next = newID;
-        newNode.next = swap;
-        if(afterNodeID == linkedList.head){
-          linkedList.head = newID;
-        }
+      if(beforeNodeID){
+          var pos = linkedList.getNodePos(beforeNodeID);
+          var prevPos  = linkedList.getParentPos(beforeNodeID);
+          if(prevPos >= 0)
+            linkedList.nodes[prevPos].next = newID;
+      }
+      if(beforeNodeID == linkedList.head){
+        linkedList.head = newID;
       }
       linkedList.nodes[linkedList.nodes.length] = newNode;
     },
@@ -45,10 +55,54 @@ var linkedList = {
        return false;
     },
     deleteNode: function(id){
+        var pos = linkedList.getNodePos(id);
+        var prevPos  = linkedList.getParentPos(id);
+        var next = linkedList.getNode(id).next;
+        if(prevPos >= 0)
+          linkedList.nodes[prevPos].next = next;
+        linkedList.nodes.splice(pos, 1);
+        if(id == linkedList.head){
+          linkedList.head = next; 
+        }
     },
     getNodeFromPos: function(pos){
     },
-    swapNodes: function(pos1, pos2){
+    swapNodes: function(fromPos, toPos){
+      console.log(fromPos);
+      console.log(toPos);
+    },
+    getParent: function(id){
+      var list = linkedList.nodes;
+      var ret = null;
+      for(var i = 0; i < list.length; i++){
+        if(linkedList.getNodePos(list[i].id).next === id){
+          ret = list[i];
+          break;
+        }
+      }
+      return ret;
+    },
+    getNode: function(id){
+      var list = linkedList.nodes;
+      var ret = null;
+      for(var i = 0; i < list.length; i++){
+        if(list[i].id === id){
+          ret = list[i];
+          break;
+        }
+      }
+      return ret;
+    },
+    getParentPos: function(id){
+      var pos = -1;
+      var list = linkedList.nodes;
+      for(var i = 0; i < list.length; i++){
+        if(list[i].next === id){
+          pos = i;
+          break;
+        }
+      }
+      return pos;
     },
     getNodePos: function(id){
       var pos = -1;
@@ -83,8 +137,7 @@ function startUp(){
   var el = document.getElementById('theList');
   sortable = Sortable.create(el, {
      onEnd: function (evt) {
-          console.log(evt.oldIndex);  // element's old index within parent
-          console.log(evt.newIndex);  // element's new index within parent
+          linkedList.swapNodes(evt.oldIndex, evt.newIndex); 
         }
      }
    );
@@ -97,7 +150,14 @@ function addLink(){
   $("#theList").prepend("<li class='" + id + "'>" + text +
                         "<a href='javascript:removeLink(" + id + ")'> X </a>" + "</li>" 
                        );
-  linkedList.addNode(text, null, id);
+  linkedList.addNodeBefore(text, null, id);
+}
+
+function removeLink(id){
+  if(confirm("Delete node ID: " + id)){
+    $("#theList ." + id).remove();
+    linkedList.deleteNode(id);
+  }
 }
 
 </script>
