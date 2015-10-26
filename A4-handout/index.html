@@ -176,6 +176,7 @@ function startUp(){
 
 function addLink(){
   var text = prompt("Add new node:");
+  if(text == null) return;
   var id = new Date().getTime();
   $("#theList").prepend("<li class='item " + id + "'>" + text +
                         "<span>" + id + "</span>" +
