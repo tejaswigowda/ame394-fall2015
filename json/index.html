@@ -1,0 +1,41 @@
+<html>
+<head>
+<script>
+var theObj = 
+[
+    {
+        label: 'node1', id: 1,
+        children: [
+            { label: 'child1', id: 2 },
+            { label: 'child2', id: 3 }
+        ]
+    },
+    {
+        label: 'node2', id: 4,
+        children: [
+            { label: 'child3', id: 5 }
+        ]
+    }
+];
+
+function clearJSON()
+{
+  document.getElementById("textArea").value = "";
+}
+
+function loadJSON()
+{
+  document.getElementById("textArea").value = JSON.stringify(theObj);
+}
+
+</script>
+
+</head>
+
+<body>
+  <textarea id='textArea'> </textarea>
+  <a href='javascript:loadJSON()'> Load </a>
+  <a href='javascript:clearJSON()'> Clear </a>
+</body>
+
+</html>
