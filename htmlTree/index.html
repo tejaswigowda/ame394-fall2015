@@ -49,19 +49,19 @@
     color: black;
     text-decoration: none;
   }
-  .edita
+  .head, .tail
   {
-      float: right;
+     margin-left: -10px;
   }
 </style>
-<link href='jquery-1.11.3.js'>
+<link rel="stylesheet" href="jqtree.css">
 <script src='jquery-1.11.3.js'> </script>
 <script src='tree.jquery.js'> </script>
 <script src='htmltree.js'> </script>
 </head>
 
 <body onload='startUp()'>
-  <h1 class="textcenter"> HTML Tree</h1>
+  <h1 class="textcenter"> HTML Tree Builder</h1>
   <hr>
   <div id="previewWrapper"> 
   </div>
@@ -70,18 +70,18 @@
     <a href='javascript:showPreview()' class='selectButton' id="previewButton"> Preview </a>
   </div>
   <div id="theTreeWrapper"> 
-    <select id='addElement' class=''>
+    <select onchange='addNewElement()' id='addElement' class=''>
       <option disabled value="0"> + Add New </option>
       <option value="h1"> Add H1 </option>
     </select>  
     <hr>
-    <div class="head"> &lt;BODY&gt;</div>
+    <div class="head"> &lt;HTML&gt;</div>
     <div id="HTMLTree">  </div>
+    <div class="tail" style='margin-top: 15px'> &lt;/HTML&gt;</div>
  </div>
   <div id="theTreeOptionsWrapper"> 
-    <a class='backButton' href='javascript:backClicked()'> Back </a>
-    <a class='saveButton' href='javascript:saveClicked()'> Save </a>
-    <a class='cancelButton' href='javascript:cancelClicked()'> Cancel </a>
+    <a class='cancelButton selectButton' style='color:red; border-color:red'  href='javascript:cancelClicked()'> Cancel </a>
+    <a class='saveButton selectButton' style='color:blue; border-color: blue;' href='javascript:saveClicked()'> Save </a>
   </div>  
 </body>
 

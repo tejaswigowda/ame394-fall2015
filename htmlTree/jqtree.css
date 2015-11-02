@@ -1,3 +1,15 @@
+.jqtree-selected
+{
+    border: 1px dashed gray;
+}
+.jqtree-element:hover
+{
+    background: gray;
+    border: 1px solid transparent;
+    color: white;
+}
+
+
 ul.jqtree-tree {
   list-style: none outside;
   margin-left: 0;

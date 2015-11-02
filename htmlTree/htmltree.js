@@ -24,24 +24,23 @@ function showPreview()
 }
 
 var allRoots = [];
+var bodyID = null;
 
-function navMapAction()
+function addNewElement()
 {
-    var opt = document.getElementById("navMapAct").value;
+    var opt = document.getElementById("addElement").value;
     document.getElementById("addElement").value = "0";
     $("#HTMLTree").addClass("hideEdit");
-    dataEdited = true;
-    unsavedDataPlugin.show();
-    var node = $("#HTMLTree").tree('getSelectedNode');
+    var node = theHTMLTree.tree('getNodeById', bodyID);
     if(node){
         $('#HTMLTree').tree(
-               'addNodeAfter',
+               'addNodeBefore',
                 {
                   label: 'Untitled',
                   id: new Date().getTime().toString(),
                   label : "Untitled",
                   children:[],
-                  type: "node"
+                  type: opt
                 },
                 node
         );
@@ -58,22 +57,26 @@ function initHTMLTree()
 {
     var row =  [{
               id: new Date().getTime().toString(),
-              label : "Untitled",
+              label : "<BODY>",
               children:[],
-              type: "H1",
+              type: "BODY",
               style: "",
+              className: "",
               innerHTML: ""
           }];
+          bodyID = row[0].id;
 
       theHTMLTree = $('#HTMLTree').tree({
           dragAndDrop: true,
           autoOpen: 0,
           data: row,
           onCreateLi: function(node, $li) {
+            /*
               $li.find('.jqtree-element').append(
                 '<a href="javascript:nodeOptions(' + "'" + node.id + "','" + node.type + "'," + node.getLevel() + ")" + '" class="edita link" data-node-id="'+
               node.id +'">edit</a>'
               );
+             */
           },
           onCanMoveTo: function(moved_node, target_node, position) {
                return true;
@@ -102,6 +105,14 @@ function initHTMLTree()
 function aHTMLTreeNodeWasMoved()
 {
 }
+
+function cancelClicked()
+{
+    document.getElementById("theTreeWrapper").style.display = "block";
+    document.getElementById("theTreeOptionsWrapper").style.display = "none";
+      document.getElementById("addElement").value = "0";
+}
+
 
 function aHTMLTreeNodeWasSelected()
 {
