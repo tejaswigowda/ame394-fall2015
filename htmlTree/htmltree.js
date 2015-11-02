@@ -1,14 +1,12 @@
 function startUp()
 {
-  document.getElementById("theTreeOptionsWrapper").style.display = "none";
-  document.getElementById("PreviewWrapper").style.display = "none";
-  document.getElementById("theTreeWrapper").style.display = "block";
   initHTMLTree();
   showTree()
 }
 
 function showTree()
 {
+  document.getElementById("theTreeOptionsWrapper").style.display = "none";
   $("#theTreeWrapper").fadeIn();
   $("#previewWrapper").fadeOut();
   $("#treeButton").addClass("active");
@@ -28,18 +26,20 @@ var bodyID = null;
 
 function addNewElement()
 {
-    var opt = "DIV";
     $("#HTMLTree").addClass("hideEdit");
     var node = theHTMLTree.tree('getNodeById', bodyID);
     if(node){
         $('#HTMLTree').tree(
                'addNodeBefore',
                 {
-                  label: 'Untitled',
                   id: new Date().getTime().toString(),
-                  label : "Untitled",
+                  label : "<DIV>",
+                  nodeID: "",
+                  style: "",
+                  className: "",
+                  innerHTML: "",
                   children:[],
-                  type: opt
+                  type: "DIV" 
                 },
                 node
         );
@@ -97,6 +97,7 @@ function initHTMLTree()
                 function(event) {
                    if (event.node) {
                       var node = event.node;
+                      currEditNode = node;
                       aHTMLTreeNodeWasSelected();
                    }
                 }
@@ -115,8 +116,24 @@ function cancelClicked()
 
 function aHTMLTreeNodeWasSelected()
 {
+    document.getElementById("treeSelector").style.display = "none";
     document.getElementById("theTreeWrapper").style.display = "none";
     document.getElementById("theTreeOptionsWrapper").style.display = "block";
+    populateNodeAttrs();
+}
+
+function populateNodeAttrs()
+{
+  var keys = Object.keys(currEditNode);
+  var outS = "";
+
+  // do something
+  
+  outS = "<span>ID : </span>" +
+        "<span>" + currEditNode.id;
+
+  document.getElementById("attrWrapper").innerHTML = outS;
+
 }
 
 var currEditNode = null;
