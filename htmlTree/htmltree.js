@@ -1,14 +1,14 @@
 function startUp()
 {
   document.getElementById("theTreeOptionsWrapper").style.display = "none";
+  document.getElementById("PreviewWrapper").style.display = "none";
+  document.getElementById("theTreeWrapper").style.display = "block";
   initHTMLTree();
   showTree()
 }
 
 function showTree()
 {
-  document.getElementById("addElement").value = "0";
- // document.getElementById("addElement").style.display = "none";
   $("#theTreeWrapper").fadeIn();
   $("#previewWrapper").fadeOut();
   $("#treeButton").addClass("active");
@@ -28,8 +28,7 @@ var bodyID = null;
 
 function addNewElement()
 {
-    var opt = document.getElementById("addElement").value;
-    document.getElementById("addElement").value = "0";
+    var opt = "DIV";
     $("#HTMLTree").addClass("hideEdit");
     var node = theHTMLTree.tree('getNodeById', bodyID);
     if(node){
@@ -58,6 +57,7 @@ function initHTMLTree()
     var row =  [{
               id: new Date().getTime().toString(),
               label : "<BODY>",
+              nodeID: "",
               children:[],
               type: "BODY",
               style: "",
@@ -110,7 +110,6 @@ function cancelClicked()
 {
     document.getElementById("theTreeWrapper").style.display = "block";
     document.getElementById("theTreeOptionsWrapper").style.display = "none";
-      document.getElementById("addElement").value = "0";
 }
 
 
@@ -118,7 +117,6 @@ function aHTMLTreeNodeWasSelected()
 {
     document.getElementById("theTreeWrapper").style.display = "none";
     document.getElementById("theTreeOptionsWrapper").style.display = "block";
-      document.getElementById("addElement").value = "0";
 }
 
 var currEditNode = null;
