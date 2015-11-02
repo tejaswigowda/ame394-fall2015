@@ -122,15 +122,27 @@ function aHTMLTreeNodeWasSelected()
     populateNodeAttrs();
 }
 
+function newRow()
+{
+  var   outS = "<input value=''>"
+                + "<input value=''>" 
+                + "<br>";
+  document.getElementById("attrWrapper").innerHTML += outS;
+}
+
 function populateNodeAttrs()
 {
   var keys = Object.keys(currEditNode);
   var outS = "";
 
-  // do something
-  
-  outS = "<span>ID : </span>" +
-        "<span>" + currEditNode.id;
+  for(var i = 0; i < keys.length; i++){
+    if( typeof currEditNode[keys[i]] === "object"){
+      continue;
+    }
+    outS = outS + "<input value='" + keys[i] + "'>"
+                + "<input value='" + currEditNode[keys[i]] + "'>" 
+                + "<br>"
+  }
 
   document.getElementById("attrWrapper").innerHTML = outS;
 
