@@ -111,6 +111,7 @@ function cancelClicked()
 {
     document.getElementById("theTreeWrapper").style.display = "block";
     document.getElementById("theTreeOptionsWrapper").style.display = "none";
+    document.getElementById("treeSelector").style.display = "block";
 }
 
 
@@ -134,18 +135,42 @@ function populateNodeAttrs()
 {
   var keys = Object.keys(currEditNode);
   var outS = "";
+  var noEdits = ["id"];
+  var onlyValueEdits = ["name", "type", "style", "className"];
 
   for(var i = 0; i < keys.length; i++){
     if( typeof currEditNode[keys[i]] === "object"){
       continue;
     }
-    outS = outS + "<input value='" + keys[i] + "'>"
+    if(noEdits.indexOf(keys[i]) >= 0){ // key is part of noEdit
+      outS = outS + "<input value='" + keys[i] + "' readonly>"
+                + "<input value='" + currEditNode[keys[i]] + "' readonly>" 
+                + "<br>"
+    }
+    else if(onlyValueEdits.indexOf(keys[i]) >= 0){ // key is part of onlyValueEdit
+      outS = outS + "<input class='' value='" + keys[i] + "' readonly>"
                 + "<input value='" + currEditNode[keys[i]] + "'>" 
                 + "<br>"
+    }
+    else{
+      outS = outS + "<input class='" + keys[i] + "' value='" + keys[i] + "'>"
+                + "<input class='" + keys[i] + "' value='" + currEditNode[keys[i]] + "'>" 
+                + "<a class='" + keys[i] + "' href='javascript:deleteAttr(" + '"' + keys[i] + '")' + "'> Delete </a>"
+                + "<br>"
+    }
   }
 
   document.getElementById("attrWrapper").innerHTML = outS;
 
+}
+
+
+function deleteAttr(c)
+{
+  var flag = confirm("Are you sure you want to delete attr: "+ c + " ?");
+  if(flag){
+    $("#attrWrapper ." + c).remove();
+  }
 }
 
 var currEditNode = null;
