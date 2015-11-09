@@ -125,10 +125,24 @@ function aHTMLTreeNodeWasSelected()
 
 function newRow()
 {
+  var temp = new Date().getTime().toString();
   var   outS = "<input value=''>"
                 + "<input value=''>" 
-                + "<br>";
+                + "<a class='" + temp + "' href='javascript:deleteAttr(" + '"' + temp + '")' + "'> Delete </a>"
+                +"<br>";
   document.getElementById("attrWrapper").innerHTML += outS;
+}
+
+
+function getNodeAttrs()
+{
+  var ret = {
+  }
+  var list = document.getElementById("attrWrapper").getElementsByTagName("input");
+  for(var i = 0; i < list.length; i++){
+  }
+
+  return ret;
 }
 
 function populateNodeAttrs()
@@ -136,7 +150,7 @@ function populateNodeAttrs()
   var keys = Object.keys(currEditNode);
   var outS = "";
   var noEdits = ["id"];
-  var onlyValueEdits = ["name", "type", "style", "className"];
+  var onlyValueEdits = ["nodeID", "name", "type", "style", "className"];
 
   for(var i = 0; i < keys.length; i++){
     if( typeof currEditNode[keys[i]] === "object"){
@@ -145,23 +159,22 @@ function populateNodeAttrs()
     if(noEdits.indexOf(keys[i]) >= 0){ // key is part of noEdit
       outS = outS + "<input value='" + keys[i] + "' readonly>"
                 + "<input value='" + currEditNode[keys[i]] + "' readonly>" 
-                + "<br>"
+                + "<br class='" + currEditNode[keys[i]] + " '>";
     }
     else if(onlyValueEdits.indexOf(keys[i]) >= 0){ // key is part of onlyValueEdit
       outS = outS + "<input class='' value='" + keys[i] + "' readonly>"
                 + "<input value='" + currEditNode[keys[i]] + "'>" 
-                + "<br>"
+                + "<br class='" + currEditNode[keys[i]] + " '>";
     }
     else{
       outS = outS + "<input class='" + keys[i] + "' value='" + keys[i] + "'>"
                 + "<input class='" + keys[i] + "' value='" + currEditNode[keys[i]] + "'>" 
                 + "<a class='" + keys[i] + "' href='javascript:deleteAttr(" + '"' + keys[i] + '")' + "'> Delete </a>"
-                + "<br>"
+                + "<br class='" + keys[i] + " '>";
     }
   }
 
   document.getElementById("attrWrapper").innerHTML = outS;
-
 }
 
 
