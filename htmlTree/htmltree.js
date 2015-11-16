@@ -266,13 +266,17 @@ function generatePreview()
         }
 
         var NewNode = document.createElement(type);
+
+        var keys = Object.keys(node);
+        for(var i =0; i < keys.length; i++){
+          NewNode[keys[i]] = node[keys[i]];
+        }
+
+
         NewNode.id = node.nodeID;
         if(NewNode.id.length == 0){
           NewNode.id = node.id;
         }
-        NewNode.name = node.name;
-        NewNode.className = node.className; 
-        NewNode.innerHTML = node.innerHTML;
         Parent.appendChild(NewNode);   
         pathAlongDOM.push(NewNode); 
 
@@ -282,3 +286,6 @@ function generatePreview()
 }
 
   
+
+
+var tree1 = '[{"id":"1447692676177","name":"<BODY>","nodeID":"","type":"BODY","style":"","className":"","innerHTML":"","is_open":true,"children":[{"id":"1447692680511","name":"Wrapper 1","nodeID":"","style":"","className":"","innerHTML":"","type":"DIV","is_open":false,"children":[{"id":"1447692749749","name":"H1","nodeID":"","style":"","className":"","innerHTML":"","type":"H1"},{"id":"1447692766027","name":"H2","nodeID":"","style":"","className":"","innerHTML":"","type":"H2"},{"id":"1447692786169","name":"Para","nodeID":"","style":"","className":"","innerHTML":"","type":"p"}]},{"id":"1447692712967","name":"Wrapper 2","nodeID":"","style":"","className":"","innerHTML":"","type":"DIV","is_open":false,"children":[{"id":"1447692740254","name":"H1","nodeID":"","style":"","className":"","innerHTML":"","type":"H1"},{"id":"1447692765760","name":"H2","nodeID":"","style":"","className":"","innerHTML":"","type":"H2"},{"id":"1447692786474","name":"Para","nodeID":"","style":"","className":"","innerHTML":"","type":"p"}]}]}]';
