@@ -259,7 +259,6 @@ function generatePreview()
         }     
         
         Parent = pathAlongDOM[pathAlongDOM.length-1];                  
-        var Root = pathAlongDOM[0];                  
 
         var type = node.type;
         if(type.toLowerCase() == "body"){
