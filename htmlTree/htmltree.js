@@ -19,6 +19,7 @@ function showPreview()
   $("#previewWrapper").fadeIn();
   $("#treeButton").removeClass("active");
   $("#previewButton").addClass("active");
+  generatePreview();
 }
 
 var allRoots = [];
@@ -70,13 +71,11 @@ function initHTMLTree()
           dragAndDrop: true,
           autoOpen: 0,
           data: row,
+          saveState: true,
           onCreateLi: function(node, $li) {
-            /*
               $li.find('.jqtree-element').append(
-                '<a href="javascript:nodeOptions(' + "'" + node.id + "','" + node.type + "'," + node.getLevel() + ")" + '" class="edita link" data-node-id="'+
-              node.id +'">edit</a>'
+                "<span class='floatright'>" +  node.type+'</span>'
               );
-             */
           },
           onCanMoveTo: function(moved_node, target_node, position) {
                return true;
@@ -129,7 +128,7 @@ function newRow()
   var   outS = "<input value=''>"
                 + "<input value=''>" 
                 + "<a class='" + temp + "' href='javascript:deleteAttr(" + '"' + temp + '")' + "'> Delete </a>"
-                +"<br>";
+                + "<br>";
   document.getElementById("attrWrapper").innerHTML += outS;
 }
 
@@ -139,7 +138,8 @@ function getNodeAttrs()
   var ret = {
   }
   var list = document.getElementById("attrWrapper").getElementsByTagName("input");
-  for(var i = 0; i < list.length; i++){
+  for(var i = 0; i < list.length/2; i++){
+    ret[list[i*2].value] = list[i*2+1].value;
   }
 
   return ret;
@@ -162,8 +162,10 @@ function populateNodeAttrs()
                 + "<br class='" + currEditNode[keys[i]] + " '>";
     }
     else if(onlyValueEdits.indexOf(keys[i]) >= 0){ // key is part of onlyValueEdit
+      var x = "";
+      if(keys[i] == "type" && currEditNode.id == bodyID) x = "readonly";
       outS = outS + "<input class='' value='" + keys[i] + "' readonly>"
-                + "<input value='" + currEditNode[keys[i]] + "'>" 
+                + "<input value='" + currEditNode[keys[i]] + "' " + x + ">" 
                 + "<br class='" + currEditNode[keys[i]] + " '>";
     }
     else{
@@ -202,29 +204,17 @@ function nodeOptions(nodeID, type, level)
    
 }
 
-function backClicked()
-{
-  cancelEdit(); 
-}
-
-function cancelEdit()
-{
-}
-
     
 
-function saveEdit()
+function saveClicked()
 {
-          theNode = theHTMLTree.tree('getNodeById', currEditNode);
-          theHTMLTree.tree(
-             'updateNode',
-             theNode,
-             {
-                 label: document.getElementById("menuNodeName").value,
-                 subname: document.getElementById("menuNodeSubName").value,
-                 icon: document.getElementById("faSel").value
-             }
-           );
+  var saveObj = getNodeAttrs();
+    $("#HTMLTree").tree(
+       'updateNode',
+       currEditNode,
+       saveObj
+     );
+  cancelClicked();
 }
 
 function deletePage()
@@ -247,4 +237,49 @@ function pageDeleteYesClicked()
     cancelEdit();
 }
 
+function generatePreview()
+{   
+  var i;
+  var temp; 
+  var Parent;
+  
+  var pathAlongDOM = new Array(); 
+  document.getElementById("previewWrapper").innerHTML = "";
+  
+  $('#HTMLTree').tree('getTree').iterate(
+     function(node,level) {
+        console.log(node.id,level);
+        if(level == 0){
+          Parent = document.getElementById("previewWrapper");
+          Parent.name = node.name;
+          pathAlongDOM = [Parent]; 
+        }
+        while(pathAlongDOM.length < level-1){
+           pathAlongDOM.pop();
+        }     
+        
+        Parent = pathAlongDOM[pathAlongDOM.length-1];                  
+        var Root = pathAlongDOM[0];                  
 
+        var type = node.type;
+        if(type.toLowerCase() == "body"){
+          type = "div";
+        }
+
+        var NewNode = document.createElement(type);
+        NewNode.id = node.nodeID;
+        if(NewNode.id.length == 0){
+          NewNode.id = node.id;
+        }
+        NewNode.name = node.name;
+        NewNode.className = node.className; 
+        NewNode.innerHTML = node.innerHTML;
+        Parent.appendChild(NewNode);   
+        pathAlongDOM.push(NewNode); 
+
+        return true;
+     }
+  );
+}
+
+  
