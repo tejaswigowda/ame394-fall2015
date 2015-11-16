@@ -254,7 +254,8 @@ function generatePreview()
           Parent.name = node.name;
           pathAlongDOM = [Parent]; 
         }
-        while(pathAlongDOM.length < level-1){
+        console.log(pathAlongDOM.length, level)
+        while(pathAlongDOM.length > level+1){
            pathAlongDOM.pop();
         }     
         
