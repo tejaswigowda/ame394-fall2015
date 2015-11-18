@@ -37,6 +37,8 @@
     position: absolute;
     top: 100px;
     width: 100%;
+        height: auto;
+            min-height: 100%;
   }
   .selectButton.active{
     color: red;
@@ -79,6 +81,11 @@
 
   <div id="theTreeWrapper"> 
     <a class='selectButton' style='color:blue; border-color: blue;' href='javascript:addNewElement()'> + Add New</a>
+    <a class='selectButton' style='color:blue; border-color: blue;' href='javascript:loadTree1()'> Load Tree 1</a>
+    <a class='selectButton' style='color:blue; border-color: blue;' href='javascript:loadTree2()'> Load Tree 2</a>
+    <a class='selectButton' style='color:blue; border-color: blue;' href='javascript:loadTree3()'> Load Tree 3</a>
+    <a class='selectButton' style='color:blue; border-color: blue;' href='javascript:getBFOrder()'> Get BF Order </a>
+    <a class='selectButton' style='color:blue; border-color: blue;' href='javascript:getDFOrder()'> Get DF Order </a>
     <hr>
     <div class="head"> &lt;HTML&gt;</div>
     <div id="HTMLTree">  </div>
