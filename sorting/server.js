@@ -58,6 +58,6 @@ function selectionSort(key)
 }
 
 
-console.log(selectionSort("title"));
-console.log(insertionSort("title"));
+console.log(selectionSort("id"));
+console.log(insertionSort("date"));
 console.log(bubbleSort("title"));
