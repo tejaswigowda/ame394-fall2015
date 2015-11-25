@@ -28,6 +28,14 @@ app.use(errorHandler());
 console.log("Simple static server listening at http://" + hostname + ":" + port);
 app.listen(port);
 
+function insertionSort(key)
+{
+}
+
+function bubbleSort(key)
+{
+}
+
 function selectionSort(key)
 {
   var arr = jsonObj;
@@ -51,3 +59,5 @@ function selectionSort(key)
 
 
 console.log(selectionSort("title"));
+console.log(insertionSort("title"));
+console.log(bubbleSort("title"));
