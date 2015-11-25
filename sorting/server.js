@@ -1,20 +1,27 @@
-var j = require("./feed.json");
- console.log(j[3].tags);
- console.log(j[3].categories);
+var jsonObj = require("./feed.json");
 
-function selectionSort(arr){
-    return null;
-}
+var express = require("express"),
+app = express();
+var bodyParser = require('body-parser');
+var errorHandler = require('errorhandler');
+var methodOverride = require('method-override');
+var hostname = process.env.HOSTNAME || 'localhost';
+var port = 8080;
 
-function insertionSort(arr){
-    return null;
-}
+app.get("/", function (req, res) {
+    res.redirect("/index.html");
+});
 
-function bubbleSort(arr){
-    return null;
-}
+app.get("/getSortedJSON", function (req, res) {
+    res.redirect("/index.html");
+});
 
-var arr = [38, 27, 43,  3,  9, 82, 10]
-console.log(selectionSort(arr));
-console.log(insertionSort(arr));
-console.log(bubbleSort(arr));
+app.use(methodOverride());
+app.use(bodyParser());
+app.use(express.static(__dirname + '/public'));
+app.use(errorHandler());
+
+console.log("Simple static server listening at http://" + hostname + ":" + port);
+app.listen(port);
+
+
