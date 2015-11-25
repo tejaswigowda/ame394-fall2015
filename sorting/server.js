@@ -1,7 +1,7 @@
-//var j = require("./feed.json");
-// console.log(j.length);
-//
-//
+var j = require("./feed.json");
+ console.log(j[3].tags);
+ console.log(j[3].categories);
+
 function selectionSort(arr){
     return null;
 }
