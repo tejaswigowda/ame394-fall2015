@@ -1,7 +1,7 @@
 #Usage
 
 * Clone this repo
-* Run  ```js node server.js ```
+* Run  ``` node server.js ```
 * Open [http://localhost:8080](http://localhost:8080) in your browser.
 
 
