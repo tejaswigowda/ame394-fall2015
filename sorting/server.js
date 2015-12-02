@@ -1,8 +1,11 @@
+var url = require('url'); /* expose url object to var url */
+var querystring = require('querystring'); 
+
 var jsonObj = require("./feed.json");
-  for (var i = 0; i < jsonObj.length - 1; i++)
-  {
-    jsonObj[i].date = new Date(jsonObj[i].date).getTime();
-  }
+for (var i = 0; i < jsonObj.length - 1; i++)
+{
+  jsonObj[i].date = new Date(jsonObj[i].date).getTime();
+}
 
 var express = require("express"),
 app = express();
@@ -17,7 +20,23 @@ app.get("/", function (req, res) {
 });
 
 app.get("/getSortedJSON", function (req, res) {
-    res.redirect("/index.html");
+  var query = url.parse(req.url).query;
+  var params = querystring.parse(query);
+  var alg = params.alg || "bubble";
+  var key = params.key || "id";
+  var result = [];
+  console.log(result);
+  if(alg === "bubble"){
+    result = bubbleSort(key); 
+  }
+  else if(alg === "insertion"){
+    result = insertionSort(key); 
+  }
+  else if(alg === "selection"){
+    result = selectionSort(key); 
+  }
+  res.send(JSON.stringify(result));
+  res.end();
 });
 
 app.use(methodOverride());
@@ -30,10 +49,14 @@ app.listen(port);
 
 function insertionSort(key)
 {
+  // change this!!
+  return jsonObj;
 }
 
 function bubbleSort(key)
 {
+  // change this!!
+  return jsonObj;
 }
 
 function selectionSort(key)
