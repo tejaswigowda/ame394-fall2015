@@ -1,5 +1,12 @@
 #Usage
 
-1. Clone this repo
-2. run node server.js
-3. open http://localhost:8080/index.html in your browser.
+* Clone this repo
+* Run  ```js node server.js ```
+* Open [http://localhost:8080](http://localhost:8080) in your browser.
+
+
+#Hints
+
+## Sorting
+
+* Complete functions ```insertionSort``` and ```bubbleSort``` in ```server.js```
