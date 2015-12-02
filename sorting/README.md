@@ -10,3 +10,7 @@
 ## Sorting
 
 * Complete functions ```insertionSort``` and ```bubbleSort``` in ```server.js```
+* Check if all the right responses are generated for ```getSortedJSON`` at the client.
+
+
+## Filtering
