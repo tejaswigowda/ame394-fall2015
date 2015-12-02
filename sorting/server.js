@@ -25,7 +25,7 @@ app.get("/getSortedJSON", function (req, res) {
   var alg = params.alg || "bubble";
   var key = params.key || "id";
   var result = [];
-  console.log(result);
+  
   if(alg === "bubble"){
     result = bubbleSort(key); 
   }
