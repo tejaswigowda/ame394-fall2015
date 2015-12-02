@@ -16,3 +16,9 @@
 
 
 ## Filtering
+
+* No need to change ```server.js``` (for filtering).
+* Generate the markup for Filter Dropdown -- 1. Parse the feed. 2. Get a unique list of all tags and categories. Note: edit ```getAllTags()```, ```getAllCats()``` and ```populateFilters()```
+* You might want to add classes to each ```listItem```.
+* Complete the ```filteredChanged()``` function to update the view when a filter is changed. --- Make sure it works for "all" Tags and Categories.
+* 
