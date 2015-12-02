@@ -10,7 +10,9 @@
 ## Sorting
 
 * Complete functions ```insertionSort``` and ```bubbleSort``` in ```server.js```
-* Check if all the right responses are generated for ```getSortedJSON`` at the client.
+* Check if all the right responses are generated for ```getSortedJSON``` at the client.
+* Example of server url request ```localhost:8080/getSortedJSON?alg=selection&key=id```
+* In ```index.html``` use ```loadURL``` to load server data asynchronously via ```getSortedJSON```.
 
 
 ## Filtering
